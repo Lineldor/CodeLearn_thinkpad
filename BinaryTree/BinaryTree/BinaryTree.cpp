@@ -64,11 +64,26 @@ int treedepth(struct binarytree *root){
 	return depth;
 }
 
+struct binarytree *invert(struct binarytree *root){
+	struct binarytree *l_child=root;
+	struct binarytree *r_child=root;
+
+	if (root!=NULL){
+		l_child=invert(root->leftchild);
+		r_child=invert(root->rightchild);
+		root->leftchild=r_child;
+		root->rightchild=l_child;
+
+	}
+	return root;//总体来说，递归就是null和返回值搞明白即可。
+}
+
 void main(){
-	struct binarytree *root;
+	struct binarytree *root,*inv;
 	root=(struct binarytree *) malloc (sizeof(struct binarytree));
 	creat(root);
-	levelorder(root);
-	int depth=treedepth(root);
-	std::cout<<std::endl<<depth<<std::endl;
+	inv=invert(root);
+	levelorder(inv);
+	/*int depth=treedepth(root);
+	std::cout<<std::endl<<depth<<std::endl;*/
 }
