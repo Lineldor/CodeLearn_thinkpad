@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <queue>
+#include <string>
 
 struct binarytree{
 	int num;
@@ -8,7 +9,7 @@ struct binarytree{
 	struct binarytree *rightchild;
 };
 
-void creat( struct binarytree *(&root))//ÒıÓÃÀàĞÍ
+void creat( struct binarytree *(&root))//å¼•ç”¨ç±»å‹
 {
 	int i;
 	std::cin>>i;
@@ -75,15 +76,51 @@ struct binarytree *invert(struct binarytree *root){
 		root->rightchild=l_child;
 
 	}
-	return root;//×ÜÌåÀ´Ëµ£¬µİ¹é¾ÍÊÇnullºÍ·µ»ØÖµ¸ãÃ÷°×¼´¿É¡£
+	return root;//æ€»ä½“æ¥è¯´ï¼Œé€’å½’å°±æ˜¯nullå’Œè¿”å›å€¼ææ˜ç™½å³å¯ã€‚
+}
+
+void TreePath(struct binarytree *root, std::vector<std::string> &treepath,std::string p){
+	if (!root->leftchild && !root->rightchild){
+		treepath.push_back(p+std::to_string(root->num));
+		return ;
+	}
+	else{
+		p=p+std::to_string(root->num);
+		//treepath.push_back(root->num);
+		TreePath(root->leftchild, treepath,p);
+		//treepath.push_back(root->num);
+		TreePath(root->rightchild, treepath,p);
+		//treepath.push_back(root->num);
+		
+	}
+}
+void sumoftree(struct binarytree* root,std::vector<int> &sum,int now){
+	if (!root->leftchild && !root->rightchild){
+		sum.push_back(now+root->num);
+		return ;
+	}
+	else{
+		now+=root->num;
+		sumoftree(root->leftchild,sum,now);
+		sumoftree(root->rightchild,sum,now);
+	}
 }
 
 void main(){
 	struct binarytree *root,*inv;
 	root=(struct binarytree *) malloc (sizeof(struct binarytree));
 	creat(root);
-	inv=invert(root);
+	std::vector<std::string> treepath;
+	std::string p;
+	TreePath(root,treepath,p);
+	for(auto i:treepath)
+		std::cout<<i<<' ';
+	std::vector<int> sum;
+	sumoftree(root,sum,0);
+	for (auto i:sum)
+		std::cout<<i<<' ';
+	/*inv=invert(root);
 	levelorder(inv);
-	/*int depth=treedepth(root);
+	int depth=treedepth(root);
 	std::cout<<std::endl<<depth<<std::endl;*/
 }
