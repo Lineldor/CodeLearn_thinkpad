@@ -87,9 +87,9 @@ void TreePath(struct binarytree *root, std::vector<std::string> &treepath,std::s
 	else{
 		p=p+std::to_string(root->num);
 		//treepath.push_back(root->num);
-		TreePath(root->leftchild, treepath,p);
+		if (root->leftchild) TreePath(root->leftchild, treepath,p);
 		//treepath.push_back(root->num);
-		TreePath(root->rightchild, treepath,p);
+		if (root->rightchild) TreePath(root->rightchild, treepath,p);
 		//treepath.push_back(root->num);
 		
 	}
@@ -101,8 +101,8 @@ void sumoftree(struct binarytree* root,std::vector<int> &sum,int now){
 	}
 	else{
 		now+=root->num;
-		sumoftree(root->leftchild,sum,now);
-		sumoftree(root->rightchild,sum,now);
+		if (root->leftchild) sumoftree(root->leftchild,sum,now);
+		if (root->rightchild) sumoftree(root->rightchild,sum,now);
 	}
 }
 
