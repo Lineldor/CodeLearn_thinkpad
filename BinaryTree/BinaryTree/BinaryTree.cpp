@@ -105,14 +105,29 @@ void sumoftree(struct binarytree* root,std::vector<int> &sum,int now){
 		if (root->rightchild) sumoftree(root->rightchild,sum,now);
 	}
 }
-
+void depthoftree(struct binarytree* root,std::vector<int> &sum,int now){
+	if (!root->leftchild && !root->rightchild){
+		sum.push_back(now+1);
+		//now=0;
+		return ;
+	}
+	else{
+		now++;
+		if (root->leftchild) depthoftree(root->leftchild,sum,now);
+		if (root->rightchild) depthoftree(root->rightchild,sum,now);
+	}
+}
 void main(){
 	struct binarytree *root,*inv;
 	root=(struct binarytree *) malloc (sizeof(struct binarytree));
 	creat(root);
-	std::vector<std::string> treepath;
-	std::string p;
-	TreePath(root,treepath,p);
+	/*std::vector<std::string> treepath;
+	std::string p;*/
+	std::vector<int> sum;
+	depthoftree(root,sum,0);
+	for (auto i:sum)
+		std::cout<<i<<' ';
+	/*TreePath(root,treepath,p);
 	for(auto i:treepath)
 		std::cout<<i<<' ';
 	std::vector<int> sum;
